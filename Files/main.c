@@ -11,7 +11,7 @@ int main(){
     printf("   Simple C Program\n");
     printf("***********************\n");
 
-    while (1){
+    while(1){
         int choice;
 
         printf("------------------\n");
@@ -62,6 +62,5 @@ void aboutSystem(){
     printf("ROOM MANAGEMENT SYSTEM\n");
     printf("Simple C program for managing rooms and their members.\n");
     printf("Developed by Kharl with the help of CHAT GPT and ONLINE WORLD.\n");
-    printf("Version: 1.0\n");
-    printf("---------------------------------------------------------\n");
+    printf("Version: 1.0\n"); printf("---------------------------------------------------------\n");
 }
