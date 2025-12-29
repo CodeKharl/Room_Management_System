@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if ! (rm -rf bin); then
+    echo 'Failed to clean'
+    exit 1
+fi
+
+echo 'Clean successfully!'

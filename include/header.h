@@ -16,18 +16,18 @@
 #define TEMP_MEMBERS_FILE "tempMemberRec.dat"
 #define ABOUT_FILE "about.txt"
 
-typedef struct{
-    char roomName[MAX_ROOM_NAME];
-    int capacity;
+typedef struct {
+  char roomName[MAX_ROOM_NAME];
+  int capacity;
 } Room;
 
-typedef struct{
-    int id;
-    char memberName[MAX_MEMBER_NAME];
-    int age;
-    char sex[MAX_SEX_LENGTH];
-    char memberAddress[MAX_MEMBER_ADDRESS];
-    int phoneNumber;
+typedef struct {
+  int id;
+  char memberName[MAX_MEMBER_NAME];
+  int age;
+  char sex[MAX_SEX_LENGTH];
+  char memberAddress[MAX_MEMBER_ADDRESS];
+  int phoneNumber;
 } Member;
 
 void infoRoom();

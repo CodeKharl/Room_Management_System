@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+SRC_DIR='src'
+INCLUDE_DIR='include'
+BIN_DIR='bin'
+OUTPUT="$BIN_DIR/room-manage"
+CFLAGS=(-std=c2x -Wall -I "$INCLUDE_DIR")
+
+mkdir "$BIN_DIR"
+
+SOURCES=()
+
+while IFS= read -r src; do
+    SOURCES+=("$src")
+done < <(find "$SRC_DIR" -name '*.c')
+
+if ! (gcc "${CFLAGS[@]}" "${SOURCES[@]}" -o "$OUTPUT"); then
+    echo 'Failed to build!' >&2
+    exit 1
+fi
+
+echo 'Build successfully!'
