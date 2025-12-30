@@ -1,72 +1,52 @@
-Room Management System (C)
+# Room Management System
 
-A simple command-line program written in C for managing rooms and their members.
-The application supports creating, updating, viewing, and deleting rooms, as well as managing members associated with each room.
+A simple C program for managing rooms and room members.
 
-This project is intended for learning and basic system design practice.
+## Overview
 
-Features
+room-manage is a command-line application written in C.  
+It provides basic room management and member management functionality.
 
-Add, remove, update, and view rooms
+## Project Structure
 
-Manage room members (add, remove, update, view)
-
-Modular project structure using source and header files
-
-Bash-based build system
-
-Project Structure
+```
 .
 ├── bin/
-│   └── build            # Bash script to build the executable
+│   └── build
 ├── src/
-│   └── *.c              # Source files
+│   └── *.c
 ├── include/
-│   └── *.h              # Header files
+│   └── *.h
 ├── scripts/
-│   └── *.sh             # Optional helper scripts
+│   └── *.sh
 ├── README.md
+```
 
-
-Header files are located in the include/ directory
-
-Source files are located in the src/ directory
-
-Requirements
-
-GCC or any compatible C compiler
-
-Bash shell
-
-Linux / Unix-like operating system
-
-Building the Program
+## Build
 
 This project does not include a Makefile.
-Instead, it uses a Bash build script.
 
-Make sure the build script is executable:
+Build the executable using the provided bash script:
 
-chmod +x ./bin/build
-
-
-Build the project using:
-
+```
+chmod +x bin/build
 ./bin/build
+```
 
+The build process outputs the executable:
 
-The script compiles all source files and generates the executable.
+```
+room-manage
+```
 
-Running the Program
+## Run
 
-After building, run the executable:
-
+```
 ./room-manage
+```
 
-Notes
+## Notes
 
-No external libraries are required
-
-Users are free to create their own Makefile if desired
-
-Designed to be simple, modular, and easy to extend
+- Header files are located in `include/`
+- Source files are located in `src/`
+- You may create your own Makefile if needed
