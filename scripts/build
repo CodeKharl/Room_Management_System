@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
-SRC_DIR='src'
-INCLUDE_DIR='include'
-BIN_DIR='bin'
+SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_PATH="$(cd "$SCRIPT_PATH/.." && pwd)"
+
+SRC_DIR="$PROJECT_PATH/src"
+INCLUDE_DIR="$PROJECT_PATH/include"
+BIN_DIR="$PROJECT_PATH/bin"
+
 OUTPUT="$BIN_DIR/room-manage"
 CFLAGS=(-std=c2x -Wall -I "$INCLUDE_DIR")
 
-mkdir "$BIN_DIR"
+mkdir -p "$BIN_DIR"
 
 SOURCES=()
 
