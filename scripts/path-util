@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+project_path() {
+    local script_path
+    script_path="$(cd "$(dirname "${BASH_SOURCE[0]:?}")" && pwd)"
+
+    local root
+    root="$(cd "$script_path/.." && pwd)"
+
+    [ "$root" = '/' ] && {
+        echo "Project_path is cannot be /" >&2
+        return 1
+    }
+
+    printf '%s\n' "$root"
+}

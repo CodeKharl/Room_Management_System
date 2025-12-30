@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
-SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_PATH="$(cd "$SCRIPT_PATH/.." && pwd)"
+SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]:?}")" && pwd)"
+
+. "$SCRIPT_PATH/path-util" || {
+    echo 'failed to load path-util.' >&2
+    exit 1
+}
+
+PROJECT_PATH="$(project_path)" || {
+    echo 'failed to get project_path' >&2
+    exit 1
+}
 
 SRC_DIR="$PROJECT_PATH/src"
 INCLUDE_DIR="$PROJECT_PATH/include"
@@ -13,14 +22,13 @@ CFLAGS=(-std=c2x -Wall -I "$INCLUDE_DIR")
 mkdir -p "$BIN_DIR"
 
 SOURCES=()
-
 while IFS= read -r src; do
     SOURCES+=("$src")
 done < <(find "$SRC_DIR" -name '*.c')
 
-if ! (gcc "${CFLAGS[@]}" "${SOURCES[@]}" -o "$OUTPUT"); then
+gcc "${CFLAGS[@]}" "${SOURCES[@]:?}" -o "$OUTPUT" || {
     echo 'Failed to build!' >&2
     exit 1
-fi
+}
 
 echo 'Build successfully!'

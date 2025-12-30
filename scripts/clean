@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
-if ! (rm -rf bin); then
-    echo 'Failed to clean'
+SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]:?}")" && pwd)"
+
+. "$SCRIPT_PATH/path-util" || {
+    echo 'failed to load path-util.' >&2
     exit 1
-fi
+}
+
+PROJECT_PATH=$(project_path)
+
+rm -rf "${PROJECT_PATH:?}/bin" || {
+    echo 'Failed to clean.' >&2
+    exit 1
+}
 
 echo 'Clean successfully!'
