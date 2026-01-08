@@ -1,34 +1,55 @@
 #!/usr/bin/env bash
 
-SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]:?}")" && pwd)"
-
-. "$SCRIPT_PATH/path-util" || {
-    echo 'failed to load path-util.' >&2
+error_exit() {
+    printf '%s\n' "$@" >&2
     exit 1
 }
 
-PROJECT_PATH="$(project_path)" || {
-    echo 'failed to get project_path' >&2
-    exit 1
+clean() {
+    rm -rf "$BIN_DIR" || error_exit 'Failed to clean.'
+    echo 'Clean successfully!'
 }
 
-SRC_DIR="$PROJECT_PATH/src"
-INCLUDE_DIR="$PROJECT_PATH/include"
+build() {
+    local src_dir="$PROJECT_PATH/src"
+    local include_dir="$PROJECT_PATH/include"
+    local output="$BIN_DIR/room-manage"
+    local cflags=(-std=c2x -Wall -I "$include_dir")
+
+    mkdir -p "$BIN_DIR"
+
+    local sources=()
+    while IFS= read -r src; do
+        sources+=("$src")
+    done < <(find "$src_dir" -type f -name '*.c')
+
+    gcc "${cflags[@]}" "${sources[@]:?'no c files found!'}" -o "$output" || error_exit 'failed to build!'
+
+    echo 'Build successfully!'
+}
+
+SCRIPT_PATH="$(cd "${BASH_SOURCE[0]%/*}" && pwd)"
+PROJECT_PATH="${SCRIPT_PATH%/*}"
+
+[[ "$PROJECT_PATH" == '/' ]] && error_exit 'Project_path is cannot be /.'
+
 BIN_DIR="$PROJECT_PATH/bin"
 
-OUTPUT="$BIN_DIR/room-manage"
-CFLAGS=(-std=c2x -Wall -I "$INCLUDE_DIR")
+ACTION=$1
+OPTIONAL_CLEAN=$2 # second argument can trigger clean
 
-mkdir -p "$BIN_DIR"
+CLEAN='-c'
 
-SOURCES=()
-while IFS= read -r src; do
-    SOURCES+=("$src")
-done < <(find "$SRC_DIR" -name '*.c')
+case $ACTION in
+"$CLEAN")
+    clean
+    ;;
+'' | 'build')
+    [[ "$OPTIONAL_CLEAN" == "$CLEAN" ]] && clean
 
-gcc "${CFLAGS[@]}" "${SOURCES[@]:?}" -o "$OUTPUT" || {
-    echo 'Failed to build!' >&2
-    exit 1
-}
-
-echo 'Build successfully!'
+    build
+    ;;
+*)
+    error_exit 'invalid arguments!' "arguments: $CLEAN (clean), '' or no args (build)"
+    ;;
+esac

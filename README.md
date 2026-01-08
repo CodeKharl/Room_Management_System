@@ -12,13 +12,13 @@ It provides basic room management and member management functionality.
 ```
 .
 ├── bin/
-│   └── build
+│   └── room-manage
 ├── src/
 │   └── *.c
 ├── include/
 │   └── *.h
 ├── scripts/
-│   └── *.sh
+│   └── build
 ├── README.md
 ```
 
@@ -29,8 +29,8 @@ This project does not include a Makefile.
 Build the executable using the provided bash script:
 
 ```
-chmod +x bin/build
-./bin/build
+chmod +x scripts/build
+./scripts/build
 ```
 
 The build process outputs the executable:
